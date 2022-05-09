@@ -1,15 +1,20 @@
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import AppBar from './components/AppBar';
-import ContactsView from 'views/ContactsView/ContactsView';
+import ContactsView from 'views/ContactsView';
 import HomeView from './views/HomeView';
 import RegisterView from './views/RegisterView';
 import LoginView from './views/LoginView';
 import Container from './components/Container';
 import { authOperations } from './redux/auth';
 
-
 export default function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
 
   return (
     <Container>

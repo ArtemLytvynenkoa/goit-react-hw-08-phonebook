@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
-import { useDeleteContactMutation } from "redux/contactsList/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { contactsOperations, contactsSelectors } from "redux/contacts";
+
 import s from "./ListItem.module.css";
 
 function ListItem({ name, number, id }) {
-    const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+    const dispatch = useDispatch();
+    const isDeleting = useSelector(contactsSelectors.getLoading);
     
     return (
         <li className={s.item} >
@@ -13,7 +16,7 @@ function ListItem({ name, number, id }) {
                 disabled={isDeleting} 
                 className={s.button}
                 type="button"
-                onClick={() => deleteContact(id)}
+                onClick={() => dispatch(contactsOperations.deleteContact(id))}
             >
                 {isDeleting ? 'Deleting...' : 'Delete'}
             </button>

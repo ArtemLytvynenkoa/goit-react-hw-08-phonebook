@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useCreateContactMutation, useFetchContactsQuery } from "redux/contactsList/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { contactsOperations, contactsSelectors } from "redux/contacts";
 import s from "./ContactForm.module.css";
 
 function ContactForm() {
-    const { data } = useFetchContactsQuery();
-    const [createContact] = useCreateContactMutation();
+    const contacts = useSelector(contactsSelectors.getAllContacts);
+    const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 
-    const checkSameName = data?.some(contact => contact.name.toLowerCase() === name.toLowerCase());
+    const checkSameName = contacts?.some(contact => contact.name.toLowerCase() === name.toLowerCase());
     const message = `${name} is already in contacts!`;
 
     const reset = () => {
@@ -19,7 +20,7 @@ function ContactForm() {
     const handleSubmit = e => {
         e.preventDefault();
 
-        checkSameName ? (alert(message)) : createContact({name, number});
+        checkSameName ? (alert(message)) : dispatch(contactsOperations.addContact({name, number}));
 
         reset()
     };
