@@ -1,25 +1,18 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authOperations } from '../redux/auth';
+import { authOperations } from '../../redux/auth';
+import s from './RegisterView.module.css';
 
-const styles = {
-  form: {
-    width: 320,
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-};
-
-export default function LoginView() {
+export default function RegisterView() {
   const dispatch = useDispatch();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
+      case 'name':
+        return setName(value);
       case 'email':
         return setEmail(value);
       case 'password':
@@ -31,18 +24,24 @@ export default function LoginView() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(authOperations.logIn({ email, password }));
+    dispatch(authOperations.register({ name, email, password }));
+    setName('');
     setEmail('');
     setPassword('');
   };
 
   return (
-    <div>
-      <h1>Страница логина</h1>
+    <div className={s.formBlock}>
+      <h1 className={s.title}>Page register</h1>
 
-      <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
-        <label style={styles.label}>
-          Почта
+      <form onSubmit={handleSubmit} className={s.form} autoComplete="off">
+        <label className={s.label}>
+          Name
+          <input type="text" name="name" value={name} onChange={handleChange} />
+        </label>
+
+        <label className={s.label}>
+          Email
           <input
             type="email"
             name="email"
@@ -51,8 +50,8 @@ export default function LoginView() {
           />
         </label>
 
-        <label style={styles.label}>
-          Пароль
+        <label className={s.label}>
+          Password
           <input
             type="password"
             name="password"
@@ -61,7 +60,7 @@ export default function LoginView() {
           />
         </label>
 
-        <button type="submit">Войти</button>
+        <button className={s.button} type="submit">Registered</button>
       </form>
     </div>
   );

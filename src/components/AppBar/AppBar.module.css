@@ -1,0 +1,11 @@
+.header {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: lavender;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid #2A363B; 
+    border-radius: 10px;
+  }
