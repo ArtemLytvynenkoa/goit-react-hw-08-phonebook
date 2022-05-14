@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import AppBar from 'components/AppBar';
 import ContactsView from 'views/ContactsView/ContactsView';
 import RegisterView from './views/RegisterView/RegisterView';
@@ -38,6 +38,7 @@ export default function App() {
             <PrivateRoute path="/contacts">
               <ContactsView/>
             </PrivateRoute>
+            <Redirect to="/contacts" />
           </Suspense>  
         </Switch>
       </Container>

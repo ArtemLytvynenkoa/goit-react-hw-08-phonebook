@@ -21,6 +21,9 @@ export default function LoginView() {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (email.trim() === '' || password.trim() === '') {
+      return alert(`Fill in all the fields!!!`)
+    }
     dispatch(authOperations.logIn({ email, password }));
     setEmail('');
     setPassword('');
