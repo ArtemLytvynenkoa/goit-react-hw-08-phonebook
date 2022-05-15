@@ -15,6 +15,7 @@ import Loader from 'components/Loader';
 export default function App() {
   const dispatch = useDispatch();
   const isFetchingCurrentUser = useSelector(authSelectors.getIsFetchingCurrentUser);
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser());
@@ -38,7 +39,8 @@ export default function App() {
             <PrivateRoute path="/contacts">
               <ContactsView/>
             </PrivateRoute>
-            <Redirect to="/contacts" />
+            {isLoggedIn && <Redirect to="/contacts" />}
+            {!isLoggedIn && <Redirect to="/login" />}
           </Suspense>  
         </Switch>
       </Container>
